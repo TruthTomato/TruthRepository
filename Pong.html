@@ -1,0 +1,131 @@
+<meta charset="UTF-8">
+<canvas width="800" height="600"></canvas>
+<br>
+<button>Switch modes (Vs P2 or Vs CPU) </button>
+<script>
+var tela = document.querySelector("canvas")
+var pincel = tela.getContext("2d")
+var button = document.querySelector("button")
+
+pincel.fillStyle = "black"
+pincel.fillRect(0, 0, 800, 600)
+function drawBall(x, y, raio) {
+	pincel.fillStyle = "white"
+	pincel.beginPath()
+	pincel.arc(x, y, raio, 0, 2 * Math.PI)
+	pincel.fill()
+}
+function movingRectangle(x, y) {
+	pincel.fillStyle = "white"
+	pincel.fillRect(x, y, 20, 100)
+	
+}
+//position variables
+var R1posx = 10
+var R1posy = 300
+var R2posx = 770
+var R2posy = 300
+var Bposx = 400
+var Bposy = 300
+function updateScreen() {
+	pincel.clearRect(0, 0, 800, 600)
+	pincel.fillStyle = "black"
+	pincel.fillRect(0, 0, 800, 600)
+	drawBall(Bposx, Bposy, 10)
+	movingRectangle(R1posx, R1posy)
+	movingRectangle(R2posx, R2posy)
+}
+//mode change
+var mode = 0
+function changeMode() {
+Bposx = 400
+Bposy = 300
+mode++
+	if(mode > 1) {
+		mode = 0
+	}
+}
+//controls
+var P1up = 87
+var P1down = 83
+var P2up = 38
+var P2down = 40
+var speed = 25
+function racketMovement(evento) {
+	if(evento.keyCode == 83) {
+		R1posy += speed
+	}
+	if(evento.keyCode == 87) {
+		R1posy -= speed
+	}
+	if(R1posy > 500) {
+		R1posy = 500
+	}
+	if(R1posy < 0) {
+		R1posy = 0
+	}
+	if(mode == 0) {
+		if(evento.keyCode == 40) {
+		R2posy += speed
+	}
+		if(evento.keyCode == 38) {
+		R2posy -= speed
+	}
+		if(R2posy > 500) {
+		R2posy = 500
+	}
+		if(R2posy < 0) {
+		R2posy = 0
+	}
+	}
+	
+}
+//difficulty and CPU stuff
+var difficulty = 100
+function computerMovement() {
+	R2posy = Bposy - difficulty
+		if(R2posy > 500) {
+		R2posy = 500
+		}
+		if(R2posy < 0) {
+		R2posy = 0
+		}
+}
+//ball speed
+sentidox = 1.5
+sentidoy = 1.5
+function ballandCPUMovement() {
+	updateScreen()
+	if(Bposx > 760 && Bposy > R2posy && Bposy < R2posy + 100) {
+		sentidox *= -1
+	}
+	if(Bposx < 40 && Bposy > R1posy && Bposy < R1posy + 100) {
+		sentidox *= -1
+	}
+	if(Bposy > 590) {
+		sentidoy *= -1
+		difficulty = parseInt(difficulty) - 5
+	}
+	if(Bposy < 10) {
+		sentidoy *= -1
+		difficulty = parseInt(difficulty) + 5
+	}
+	if(Bposx > 800) {
+		Bposx = 400
+		Bposy = 300
+	}
+	if(Bposx < 0) {
+		Bposx = 400
+		Bposy = 300
+	}
+	if(mode == 1) {
+		computerMovement()
+	}
+	
+	Bposx += sentidox
+	Bposy += sentidoy
+}
+setInterval(ballandCPUMovement, 0.5)
+document.onkeydown = racketMovement
+button.onclick = changeMode
+</script>
