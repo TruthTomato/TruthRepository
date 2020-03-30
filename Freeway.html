@@ -1,0 +1,400 @@
+<meta charset="UTF-8">
+<canvas width="1360" height="768"></canvas>
+<script>
+var tela = document.querySelector("canvas")
+var pincel = tela.getContext("2d")
+
+//background
+function background() {
+pincel.fillStyle = "grey"
+pincel.fillRect(0, 0, 1360, 768)
+}
+
+//walkways
+function walkways() {
+pincel.fillStyle = "lightgrey"
+pincel.fillRect(0, 728, 1360, 40)
+pincel.strokeRect(0, 728, 1360, 40)
+pincel.fillStyle = "lightgrey"
+pincel.fillRect(0, 50, 1360, 40)
+pincel.strokeRect(0, 50, 1360, 40)
+}
+var carColors = ["blue", "red", "yellow", "black", "darkblue", "green", "orange", "lightblue", "purple", "lightgreen", "pink"]
+//carColors[Math.round(Math.random() * 10)]
+//carsprites
+function car(x, y, color) {
+pincel.fillStyle = color
+pincel.fillRect(x, y, 60, 30)
+pincel.fillRect(x + 60, y + 4, 4, 20) 
+pincel.fillStyle = "black"
+pincel.fillRect(x + 5, y - 6, 12, 6) 
+pincel.fillRect(x + 5, y + 30, 12, 6) 
+pincel.fillRect(x + 48, y - 6, 12, 6) 
+pincel.fillRect(x + 48, y + 30, 12, 6) 
+pincel.fillStyle = "grey"
+pincel.fillRect(x + 30, y + 7.5, 15, 15) 
+pincel.fillRect(x + 15, y + 4, 15, 4) 
+pincel.fillRect(x + 15, y + 21, 15, 4) 
+pincel.fillRect(x + 8, y + 7.5, 7.5, 15) 
+}
+function reverseCar(x, y, color) {
+pincel.fillStyle = color
+pincel.fillRect(x, y, 60, 30)
+pincel.fillRect(x - 4, y + 4, 4, 20)
+pincel.fillStyle = "black"
+pincel.fillRect(x, y - 6, 12, 6) 
+pincel.fillRect(x , y + 30, 12, 6) 
+pincel.fillRect(x + 43, y - 6, 12, 6) 
+pincel.fillRect(x + 43, y + 30, 12, 6)
+pincel.fillStyle = "grey"
+pincel.fillRect(x + 15, y + 7.5, 15, 15) 
+pincel.fillRect(x + 30, y + 4, 15, 4)
+pincel.fillRect(x + 30, y + 21, 15, 4)
+pincel.fillRect(x + 45, y + 7.5, 7.5, 15) 
+}
+function truck(x, y) {
+pincel.fillStyle = "SaddleBrown"
+pincel.fillRect(x, y, 120, 30)
+pincel.fillStyle = "black"
+pincel.fillRect(x, y - 6, 15, 6)
+pincel.fillRect(x, y + 30, 15, 6)
+pincel.fillRect(x + 75, y - 6, 15, 6)
+pincel.fillRect(x + 75, y + 30, 15, 6)
+pincel.fillRect(x + 105, y - 6, 15, 6)
+pincel.fillRect(x + 105, y + 30, 15, 6)
+pincel.fillStyle = "grey"
+pincel.fillRect(x + 15, y + 3, 60, 3)
+pincel.fillRect(x + 15, y + 24, 60, 3)
+pincel.fillRect(x + 90, y + 3, 15, 24)
+}
+//streetlines
+function streetLine(x, y){
+	while(x <= 1360) {
+		pincel.fillStyle = "white"
+		pincel.fillRect(x, y, 30, 4)
+		x = x + 50
+			if(x > 1360 && y < 728 && y > 90) {
+				x = x - 1350
+				y = y + 70
+			}
+	}
+}
+function yellowStreetLine(x, y) {
+	while(x <= 1360) {
+		pincel.fillStyle = "grey"
+		pincel.fillRect(x, y, 30, 4)
+		pincel.fillStyle = "yellow"
+		pincel.fillRect(x, y - 5, 30, 4)
+		pincel.fillStyle = "yellow"
+		pincel.fillRect(x, y + 5, 30, 4)
+		x = x + 50
+	}
+}
+function greyLastLine(x, y) {
+	while(x <= 1360) {
+		pincel.fillStyle = "grey"
+		pincel.fillRect(x, y, 30, 4)
+		x = x + 50
+	}
+}
+//screen update
+var x = 20
+var y = 160
+var yellowy = y + 70 * 3
+var greyy = y + 70 * 8
+function updateScreen() {
+	pincel.clearRect(0, 0, 1360, 768)
+	background()
+	walkways()
+	streetLine(x, y)
+	yellowStreetLine(x, yellowy)
+	greyLastLine(x, greyy)
+
+}
+//cars
+var x1car1 = 370
+var x1car2 = x1car1 - 300
+var x1car3 = x1car2 - 300
+var y1 = 667.5
+var color1 = carColors[Math.round(Math.random() * 10)]
+function firstRow() {
+	x1car1 += 1
+	x1car2 += 1
+	x1car3 += 1
+		if(x1car1 > 1360) {
+			x1car1 = 0
+		}
+		if(x1car2 > 1360) {
+			x1car2 = 0
+		}
+		if(x1car3 > 1360) {
+			x1car3 = 0
+		}
+	
+	car(x1car1, y1, color1)
+	car(x1car2, y1, color1)
+	car(x1car3, y1, color1)
+}
+var x2car1 = 370
+var x2car2 = x2car1 - 300
+var x2car3 = x2car2 - 300
+var y2 = 597.5
+var color2 = carColors[Math.round(Math.random() * 10)]
+function secondRow() {
+	x2car1 += 1.5
+	x2car2 += 1.5
+	x2car3 += 1.5
+		if(x2car1 > 1360) {
+			x2car1 = 0
+		}
+		if(x2car2 > 1360) {
+			x2car2 = 0
+		}
+		if(x2car3 > 1360) {
+			x2car3 = 0
+		}
+	car(x2car1, y2, color2)
+	car(x2car2, y2, color2)
+	car(x2car3, y2, color2)
+}
+var x3car1 = 0
+var y3 = 527.5
+var color3 = carColors[Math.round(Math.random() * 10)]
+function thirdRow() {
+	x3car1 += 2
+		if(x3car1 > 1360) {
+			x3car1 = 0
+		}
+	car(x3car1, y3, color3)
+}
+var x4car1 = 370
+var x4car2 = x4car1 - 300
+var x4car3 = x4car2 - 300
+var y4 = 457.5
+var color4 = carColors[Math.round(Math.random() * 10)]
+function fourthRow() {
+	x4car1 += 4
+	x4car2 += 4
+	x4car3 += 4
+		if(x4car1 > 1360) {
+			x4car1 = 0
+		}
+		if(x4car2 > 1360) {
+			x4car2 = 0
+		}
+		if(x4car3 > 1360) {
+			x4car3 = 0
+		}
+	car(x4car1, y4, color4)
+	car(x4car2, y4, color4)
+	car(x4car3, y4, color4)
+
+}
+var x5car1 = 45
+var y5 = 387.5
+function fifthRow() {
+	x5car1 += 4.5
+		if(x5car1 > 1360) {
+			x5car1 = 0
+		}
+	truck(x5car1, y5)
+}
+var x6car1 = 1360
+var y6 = 317.5
+var color6 = carColors[Math.round(Math.random() * 10)]
+function sixthRow() {
+	x6car1 -= 4.5
+		if(x6car1 + 60 < 0) {
+			x6car1 = 1360
+		}
+	reverseCar(x6car1, y6, color6)
+}
+var x7car1 = 370
+var x7car2 = x7car1 + 300
+var x7car3 = x7car2 + 300
+var y7 = 247.5
+var color7 = carColors[Math.round(Math.random() * 10)]
+function seventhRow() {
+	x7car1 -= 4
+	x7car2 -= 4
+	x7car3 -= 4
+		if(x7car1 + 60 < 0) {
+			x7car1 = 1360
+		}
+		if(x7car2 + 60 < 0) {
+			x7car2 = 1360
+		}
+		if(x7car3 + 60 < 0) {
+			x7car3 = 1360
+		}
+	reverseCar(x7car1, y7, color7)
+	reverseCar(x7car2, y7, color7)
+	reverseCar(x7car3, y7, color7)
+		
+}
+var x8car1 = 1360
+var y8 = 177.5
+var color8 = carColors[Math.round(Math.random() * 10)]
+function eightRow() {
+	x8car1 -= 2
+		if(x8car1 + 60 < 0) {
+			x8car1 = 1360
+		}
+	reverseCar(x8car1, y8, color8)
+}
+var x9car1 = 370
+var x9car2 = x9car1 + 300
+var x9car3 = x9car2 + 300
+var y9 = 107.5
+var color9 = carColors[Math.round(Math.random() * 10)]
+function ninthRow() {
+	x9car1 -= 1.5
+	x9car2 -= 1.5
+	x9car3 -= 1.5
+		if(x9car1 + 60 < 0) {
+			x9car1 = 1360
+		}
+		if(x9car2 + 60 < 0) {
+			x9car2 = 1360
+		}
+		if(x9car3 + 60 < 0) {
+			x9car3 = 1360
+		}
+	reverseCar(x9car1, y9, color9)
+	reverseCar(x9car2, y9, color9)
+	reverseCar(x9car3, y9, color9)
+}
+//playercharacter
+var chicken1x = 330
+var chicken1y = 744
+var chicken2x = 1030
+var chicken2y = 744
+function chicken(x, y) {
+pincel.fillStyle = "yellow"
+pincel.fillRect(x, y, 20, 15)
+pincel.fillRect(x - 7, y + 4, 20, 15)
+pincel.fillRect(x + 13, y - 4, 13, 4)
+pincel.fillRect(x + 13, y - 8, 7, 8)
+pincel.fillRect(x - 13, y + 8, 6, 7.5)
+pincel.fillRect(x - 19, y + 4, 6, 7.5)
+pincel.fillRect(x + 7, y + 19, 15, 4)
+}
+//controls
+var steps = 35
+function chickenMove(evento) {
+	if(evento.keyCode == 38) {
+	chicken1y -= steps
+	}
+	if(evento.keyCode == 40) {
+	chicken1y += steps
+	}
+	if(evento.keyCode == 39) {
+	chicken1x += steps
+	}
+	if(evento.keyCode == 37) {
+	chicken1x -= steps
+	}
+	if(chicken1x < 19) {
+	chicken1x = 19
+	}
+	if(chicken1x > 1334) {
+	chicken1x = 1334
+	}
+	if(chicken1y > 745) {
+	chicken1y = 745
+	}
+	if(evento.keyCode == 87) {
+	chicken2y -= steps
+	}
+	if(evento.keyCode == 83) {
+	chicken2y += steps
+	}
+	if(evento.keyCode == 68) {
+	chicken2x += steps
+	}
+	if(evento.keyCode == 65) {
+	chicken2x -= steps
+	}
+	if(chicken2x < 19) {
+	chicken2x = 19
+	}
+	if(chicken2x > 1334) {
+	chicken2x = 1334
+	}
+	if(chicken2y > 745) {
+	chicken2y = 745
+	}
+}
+//hitboxes
+var stepBack = 70
+function comparison(x, y) {
+	if(chicken1y > y && chicken1y < y + 30 && chicken1x > x && chicken1x < x + 60) {
+		chicken1y += stepBack
+	}
+	if(chicken2y > y && chicken2y < y + 30 && chicken2x > x && chicken2x < x + 60) {
+		chicken2y += stepBack
+	}
+}
+function carHit() {
+	comparison(x1car1, y1)
+	comparison(x1car2, y1)
+	comparison(x1car3, y1)
+	comparison(x2car1, y2)
+	comparison(x2car2, y2)
+	comparison(x2car3, y2)
+	comparison(x3car1, y3)
+	comparison(x4car1, y4)
+	comparison(x4car2, y4)
+	comparison(x4car3, y4)
+	comparison(x5car1, y5)
+	comparison(x6car1, y6)
+	comparison(x7car1, y7)
+	comparison(x7car2, y7)
+	comparison(x7car3, y7)
+	comparison(x8car1, y8)
+	comparison(x9car1, y9)
+	comparison(x9car2, y9)
+	comparison(x9car3, y9)
+}
+//scoring
+var P1score = 0
+var P2score = 0
+function score() {
+pincel.fillStyle = "salmon"
+pincel.font = "68px serif"
+pincel.fillText(P1score, 380, 50)
+pincel.fillText(P2score, 980, 50)
+}
+function scoring() {
+	if(chicken1y < 90) {
+	P1score++
+	chicken1x = 330
+	chicken1y = 744
+	}
+	if(chicken2y < 90) {
+	P2score++
+	chicken2x = 1030
+	chicken2y = 744
+	}
+}
+
+function allCars() {
+	updateScreen()
+	firstRow()
+	secondRow()
+	thirdRow()
+	fourthRow()
+	fifthRow()
+	sixthRow()
+	seventhRow()
+	eightRow()
+	ninthRow()
+	score()
+	chicken(chicken1x, chicken1y)
+	chicken(chicken2x, chicken2y)
+	carHit()
+	scoring()
+}
+setInterval(allCars, 0.5)
+document.onkeydown = chickenMove
+</script>
